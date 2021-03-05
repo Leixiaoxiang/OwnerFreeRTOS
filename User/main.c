@@ -8,6 +8,8 @@ ListItem xList_Item3;
 
 int main(void)
 {
+    UBaseType_t size_t = (UBaseType_t)0UL;
+
     vListInitialise(&xList_Tree);
 
     vListInitialiseItem(&xList_Item1);
@@ -24,6 +26,15 @@ int main(void)
     vListInsert(&xList_Tree,&xList_Item2);
 
     vListInsert(&xList_Tree,&xList_Item3);
+
+    size_t = uxListRemove(&xList_Item3);
+
+    size_t = uxListRemove(&xList_Item1);
+
+    size_t = uxListRemove(&xList_Item2);
+
+
+
 
     for(;;)
     {
