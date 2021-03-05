@@ -25,9 +25,9 @@ typedef struct xMINI_LIST_ITEM MiniListItem_t;
 
 typedef struct xLIST
 {
-    UBaseType_t uxNumberOfItems;    /*链表节点的计数*/
+    UBaseType_t uxNumberOfItems;    /*链表节点的计敄1�7*/
     ListItem * pxIndex;             /*链表节点索引指针*/
-    MiniListItem_t xListEnd;        /*链表最后一个节点*/
+    MiniListItem_t xListEnd;        /*链表朢�后一个节炄1�7*/
 }List_t;
 
 
@@ -73,5 +73,11 @@ typedef struct xLIST
         (pxTCB) = (pxConstList)->pxIndex->pvOwner;
 }
 #endif
+
+void vListInitialiseItem(ListItem * const pxItem);
+void vListInitialise(List_t * const pxList);
+void vListInsertEnd(List_t * const pxList, ListItem * const pxNewListItem);
+void vListInsert(List_t * const pxList, ListItem * const pxNewListItem);
+UBaseType_t uxListRemove(ListItem * const pxItemToRemove);
 				
 #endif
