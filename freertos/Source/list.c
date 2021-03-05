@@ -46,7 +46,7 @@ void vListInsert(List_t * const pxList, ListItem * const pxNewListItem)
     const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
 
     for ( pxIterator = (ListItem * ) & (pxList->xListEnd); 
-            pxIterator->xItemValue <= xValueOfInsertion; 
+            pxIterator->pxNext->xItemValue <= xValueOfInsertion; 
             pxIterator = pxIterator->pxNext)
     {
         

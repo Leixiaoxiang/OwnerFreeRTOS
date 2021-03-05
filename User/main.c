@@ -14,10 +14,10 @@ int main(void)
     xList_Item1.xItemValue = (TickType_t)1U;
 
     vListInitialiseItem(&xList_Item2);
-    xList_Item1.xItemValue = (TickType_t)2U;
+    xList_Item2.xItemValue = (TickType_t)2U;
 
     vListInitialiseItem(&xList_Item3);
-    xList_Item1.xItemValue = (TickType_t)3U;
+    xList_Item3.xItemValue = (TickType_t)3U;
 
     vListInsert(&xList_Tree,&xList_Item1);
 
