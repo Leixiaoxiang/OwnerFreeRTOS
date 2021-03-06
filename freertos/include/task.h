@@ -23,4 +23,6 @@ TaskHandle_t xTaskCreateStatic(TaskFunction_t pxTaskCode,
                                 TCB_t * const pxTaskBuffer
                             );
 
+void prvInitialiseTaskLists(void);
+
 #endif

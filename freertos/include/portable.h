@@ -3,4 +3,8 @@
 
 #include "portmacro.h"
 
+
+StakType_t *pxPortInitialiseStack(StakType_t *pxTopOfStack,
+                                    TaskFunction_t pxCode,
+                                    void * pvParameters);
 #endif

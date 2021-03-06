@@ -1,40 +1,70 @@
-#include "list.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
-tskTCB Task1CTB;
-tskTCB Task2CTB;
+extern List_t pxReadyTaskLists[configMAX_PRIORITIES];
+
+
+TaskHandle_t Task1_Handle;
+#define TASK1_STACK_SIZE      ((UBaseType_t)128) 
+StakType_t Task1Stack[TASK1_STACK_SIZE];
+TCB_t Task1TCB;
+
+TaskHandle_t Task2_Handle;
+#define TASK2_STACK_SIZE      ((UBaseType_t)128) 
+StakType_t Task2Stack[TASK2_STACK_SIZE];
+TCB_t Task2TCB;
+
+portCHAR flag1;
+portCHAR flag2;
+
+void delay (uint32_t count)
+{
+	for(; count!=0; count--);
+}
+
+void Task1_Entry(void *p_arg)
+{
+    for(;;)
+    {
+        flag1 = 0;
+        delay(100);
+        flag1 = 1;
+        delay(100);
+    }
+}
+
+void Task2_Entry(void *p_arg)
+{
+    for(;;)
+    {
+        flag2 = 0;
+        delay(100);
+        flag2 = 1;
+        delay(100);
+    }
+}
 
 int main(void)
 {
-    UBaseType_t size_t = (UBaseType_t)0UL;
+    prvInitialiseTaskLists();
 
-    vListInitialise(&xList_Tree);
+    Task1_Handle = xTaskCreateStatic((TaskFunction_t)Task1_Entry,
+                                        (char *)"Task1",
+                                        (uint32_t)TASK1_STACK_SIZE,
+                                        (void *)NULL,
+                                        Task1Stack,
+                                        &Task1TCB);
 
-    vListInitialiseItem(&xList_Item1);
-    xList_Item1.xItemValue = (TickType_t)1U;
+    vListInsertEnd(&(pxReadyTaskLists[1]),&(Task1TCB.xStateListItem));
 
-    vListInitialiseItem(&xList_Item2);
-    xList_Item2.xItemValue = (TickType_t)2U;
+    Task2_Handle = xTaskCreateStatic((TaskFunction_t)Task2_Entry,
+                                        (char *)"Task2",
+                                        (uint32_t)TASK2_STACK_SIZE,
+                                        (void *)NULL,
+                                        Task2Stack,
+                                        &Task2TCB);
 
-    vListInitialiseItem(&xList_Item3);
-    xList_Item3.xItemValue = (TickType_t)3U;
+    vListInsertEnd(&(pxReadyTaskLists[1]),&(Task2TCB.xStateListItem));
 
-    vListInsert(&xList_Tree,&xList_Item1);
-
-    vListInsert(&xList_Tree,&xList_Item2);
-
-    vListInsert(&xList_Tree,&xList_Item3);
-
-    size_t = uxListRemove(&xList_Item3);
-
-    size_t = uxListRemove(&xList_Item1);
-
-    size_t = uxListRemove(&xList_Item2);
-
-
-
-
-    for(;;)
-    {
-
-    }
+    vTaskStartScheduler();
 }
