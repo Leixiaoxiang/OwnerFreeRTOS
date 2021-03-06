@@ -1,10 +1,7 @@
 #include "list.h"
 
-List_t xList_Tree;
-
-ListItem xList_Item1;
-ListItem xList_Item2;
-ListItem xList_Item3;
+tskTCB Task1CTB;
+tskTCB Task2CTB;
 
 int main(void)
 {
