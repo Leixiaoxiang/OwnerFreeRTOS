@@ -30,6 +30,7 @@ void Task1_Entry(void *p_arg)
         delay(100);
         flag1 = 1;
         delay(100);
+        taskYIELD();
     }
 }
 
@@ -41,6 +42,7 @@ void Task2_Entry(void *p_arg)
         delay(100);
         flag2 = 1;
         delay(100);
+        taskYIELD();
     }
 }
 
@@ -67,4 +69,10 @@ int main(void)
     vListInsertEnd(&(pxReadyTaskLists[1]),&(Task2TCB.xStateListItem));
 
     vTaskStartScheduler();
+
+    for (;;)
+    {
+        /* code */
+    }
+    
 }

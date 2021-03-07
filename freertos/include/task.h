@@ -3,6 +3,9 @@
 
 #include "FreeRTOS.h"
 
+#define taskYIELD()       portYIELD()
+
+
 typedef void * TaskHandle_t;
 
 typedef struct tskTaskControlBlock
@@ -24,5 +27,6 @@ TaskHandle_t xTaskCreateStatic(TaskFunction_t pxTaskCode,
                             );
 
 void prvInitialiseTaskLists(void);
+void vTaskSwitchContext(void);
 
 #endif

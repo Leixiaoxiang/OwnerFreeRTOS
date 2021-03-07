@@ -6,6 +6,7 @@
 #define configSUPPORT_STATIC_ALLOCATION 1UL
 #define configMAX_PRIORITIES            5UL
 #define configKERNEL_INTERRRUPT_PRIORITY 255UL
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY 191UL
 
 #define xPortPendSVHandler              PendSV_Handler
 #define xPortSysTickHandler             SysTick_Handler

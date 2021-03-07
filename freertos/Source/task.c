@@ -1,5 +1,8 @@
 #include "task.h"
 
+extern TCB_t Task1TCB;
+extern TCB_t Task2TCB;
+
 TCB_t *pxCurrentTCB = NULL;
 
 static void prvInitialiseNewTask(TaskFunction_t pxTaskCode,
@@ -109,3 +112,14 @@ void vTaskStartScheduler(void)
     }
 }
 
+void vTaskSwitchContext(void)
+{
+    if(pxCurrentTCB == &Task1TCB)
+    {
+        pxCurrentTCB = &Task2TCB;
+    }
+    else
+    {
+        pxCurrentTCB = &Task1TCB;
+    }
+}
