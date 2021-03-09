@@ -2,6 +2,7 @@
     "files.associations": {
         "list.h": "c",
         "files.encoding": "utf8",
-        "task.h": "c"
+        "task.h": "c",
+        "freertos.h": "c"
     }
 }
