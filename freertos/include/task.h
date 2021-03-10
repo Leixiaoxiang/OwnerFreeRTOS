@@ -3,18 +3,6 @@
 
 #include "FreeRTOS.h"
 
-#define portNVIC_INT_CTRL_REG   (*((volatile unint32_t) 0xE000ED04))
-#define portNVIC_PENDSVSET_BIT  (1UL << 28UL)
-#define portSY_FULL_READ_WRITE  (15)
-#define portYIELD() \
-{\
-    portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;\
-    __dsb(portSY_FULL_READ_WRITE);   \
-    __isb(portSY_FULL_READ_WRITE);   \
-}
-
-#define taskYIELD()       portYIELD()
-
 
 typedef void * TaskHandle_t;
 

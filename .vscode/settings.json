@@ -3,6 +3,8 @@
         "list.h": "c",
         "files.encoding": "utf8",
         "task.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "freertosconsig.h": "c",
+        "portable.h": "c"
     }
 }

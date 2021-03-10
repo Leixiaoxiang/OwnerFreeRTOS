@@ -12,6 +12,17 @@
 #define portNVIC_PENDSV_PRI     (((uint32_t) configKERNEL_INTERRRUPT_PRIORITY) << 16UL)
 #define portNVIC_SYSTICK_PRI    (((uint32_t) configKERNEL_INTERRRUPT_PRIORITY) << 24UL)
 
+#define portNVIC_INT_CTRL_REG   (*((volatile unint32_t) 0xE000ED04))
+#define portNVIC_PENDSVSET_BIT  (1UL << 28UL)
+#define portSY_FULL_READ_WRITE  (15)
+
+void portYIELD(void)
+{
+    portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+    __dsb(portSY_FULL_READ_WRITE);
+    __isb(portSY_FULL_READ_WRITE);
+}
+
 static void prvTaskExitError(void)
 {
     for(;;)
