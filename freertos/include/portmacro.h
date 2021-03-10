@@ -25,14 +25,6 @@ typedef unsigned portBASE_TYPE UBaseType_t;
     #define portMAX_DELAY (TickType_t)0xFFFFFFFFUL
 #endif
 
-#define portNVIC_INT_CTRL_REG   (*((volatile unint32_t) 0xE000ED04))
-#define portNVIC_PENDSVSET_BIT  (1UL << 28UL)
-#define portSY_FULL_READ_WRITE  (15)
-#define portYIELD() \
-{\
-    portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;\
-    _dsb(portSY_FULL_READ_WRITE);   \
-    _isb(portSY_FULL_READ_WRITE);   \
-}\
+
 
 #endif

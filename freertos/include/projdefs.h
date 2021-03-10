@@ -6,9 +6,9 @@
 typedef void (*TaskFunction_t)(void *);
 
 #define pdFALSE     ((UBaseType_t)0UL)
-#define pdTRUE      ((UBaseType_t)0UL)
+#define pdTRUE      ((UBaseType_t)1UL)
 
-#define pdPASS      (pdFALSE)
-#define pdFAIL      (pdTRUE)
+#define pdPASS      (pdTRUE)
+#define pdFAIL      (pdFALSE)
 
 #endif

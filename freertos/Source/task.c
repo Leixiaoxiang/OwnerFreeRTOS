@@ -32,13 +32,13 @@ TaskHandle_t xTaskCreateStatic(TaskFunction_t pxTaskCode,
     if((NULL != puxStackBuffer) && (NULL != pxTaskBuffer))
     {
         pxNewTCB = (TCB_t *)pxTaskBuffer;
-        pxNewTCB->pxStack = (StakType_t * )puxStackBuffer;
+        pxNewTCB->pxStack = (StakType_t * )puxStackBuffer;/*将设置的stack区域赋值到TCB中*/
 
         prvInitialiseNewTask(pxTaskCode,
                             pcName,
                             ulStackDepth,
                             pvParameters,
-                            &xReturn,
+                            &xReturn,   /*句柄*/
                             pxNewTCB);
 
     }
@@ -61,11 +61,11 @@ static void prvInitialiseNewTask(TaskFunction_t pxTaskCode,
     StakType_t *pxTopOfStack;
     UBaseType_t x;
 
-    pxTopOfStack = pxNewTCB->pxStack + (ulStackDepth - (uint32_t)1);
-    /*向下�?8字节对齐，现在是栈顶*/
+    pxTopOfStack = pxNewTCB->pxStack + (ulStackDepth - (uint32_t)1);    /*设置到栈顶*/
+    /*浮点运算和移植需要考虑到8Byte*/
     pxTopOfStack = (StakType_t *)((uint32_t)pxTopOfStack & (~((uint32_t)0x07)));
 
-    for (x = (UBaseType_t)0; x < (UBaseType_t)configMAX_TASK_NAME_LEN; x++)
+    for (x = (UBaseType_t)0; x < (UBaseType_t)configMAX_TASK_NAME_LEN; x++)/*最长的任务名长度为configMAX_TASK_NAME_LEN*/
     {
         pxNewTCB->pcTaskName[x] = pcName[x];
         if(pcName[x] == 0x00)
@@ -76,15 +76,15 @@ static void prvInitialiseNewTask(TaskFunction_t pxTaskCode,
 
     pxNewTCB->pcTaskName[configMAX_TASK_NAME_LEN - 1] = '\0';
 
-    vListInitialiseItem(&(pxNewTCB->xStateListItem));
+    vListInitialiseItem(&(pxNewTCB->xStateListItem));   /*未插入链表之前赋值为NULL*/
 
-    listSET_LIST_ITEM_OWNER(&(pxNewTCB->xStateListItem),pxNewTCB);
+    listSET_LIST_ITEM_OWNER(&(pxNewTCB->xStateListItem),pxNewTCB);  /*将TCB于他自身包含的链表项包含起来，在后面就可从链表项知道是哪个TCB*/
 
     pxNewTCB->pxTopOfStack = pxPortInitialiseStack(pxTopOfStack,pxTaskCode,pvParameters);
 
     if((void *)pxCreateTask != NULL)
     {
-        *pxCreateTask = (TaskHandle_t)pxNewTCB;
+        *pxCreateTask = (TaskHandle_t)pxNewTCB; /*将TCB变成句柄返回*/
     }
     
 }
@@ -93,10 +93,10 @@ void prvInitialiseTaskLists(void)
 {
     UBaseType_t uxPriority;
     for(uxPriority = (UBaseType_t)0UL;
-        uxPriority < (UBaseType_t)configMAX_PRIORITIES;
+        uxPriority < (UBaseType_t)configMAX_PRIORITIES; /*每个优先级都有对应点的链表*/
         uxPriority++)
     {
-        vListInitialise(&(pxReadyTaskLists[uxPriority]));
+        vListInitialise(&(pxReadyTaskLists[uxPriority]));   /*对每个链表都进行初始化*/
     }
 }
 

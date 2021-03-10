@@ -48,15 +48,19 @@ void Task2_Entry(void *p_arg)
 
 int main(void)
 {
+    /*初始化链表的数组*/
     prvInitialiseTaskLists();
-
+    /*
+        设置堆栈的位置 TCB与TCB的链表项连接起来 并将入口函数进栈
+    */
     Task1_Handle = xTaskCreateStatic((TaskFunction_t)Task1_Entry,
                                         (char *)"Task1",
                                         (uint32_t)TASK1_STACK_SIZE,
                                         (void *)NULL,
                                         Task1Stack,
                                         &Task1TCB);
-
+    /*判断TCB创建是否成功*/
+    /*将TCB中的链表项插入到链表数组中 */
     vListInsertEnd(&(pxReadyTaskLists[1]),&(Task1TCB.xStateListItem));
 
     Task2_Handle = xTaskCreateStatic((TaskFunction_t)Task2_Entry,
@@ -66,7 +70,7 @@ int main(void)
                                         Task2Stack,
                                         &Task2TCB);
 
-    vListInsertEnd(&(pxReadyTaskLists[1]),&(Task2TCB.xStateListItem));
+    vListInsertEnd(&(pxReadyTaskLists[2]),&(Task2TCB.xStateListItem));
 
     vTaskStartScheduler();
 

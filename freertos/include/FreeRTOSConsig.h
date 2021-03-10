@@ -8,8 +8,8 @@
 #define configKERNEL_INTERRRUPT_PRIORITY 255UL
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY 191UL
 
-#define xPortPendSVHandler              PendSV_Handler
+#define xPortPendSVHandler              PendSV_Handler  /*可悬起系统调用*/
 #define xPortSysTickHandler             SysTick_Handler
-#define xPortSVCHandler                 SVC_Handler
+#define xPortSVCHandler                 SVC_Handler /*系统服务调用*/
 
 #endif
